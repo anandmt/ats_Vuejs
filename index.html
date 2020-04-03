@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body style="background-color:#2A1468;">
+    <div id="app">
+        <div class="container-fluid">
+            <div class="d-flex text-white">
+                <div class="d-flex flex-column">
+                    <div class="rounded mt-4 p-4 bg-info">
+                        <p class="h5">Attendance Tracking System</p>
+                    </div>
+                <div class="rounded bg-info mt-4 p-4">
+                   
+                    <p class="h5">{{greetings}}</p>
+                    <form class="mt-5" id="inputForm" onsubmit="return false">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" placeholder="Please enter you name." class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="url">URL</label>
+                            <input type="text" placeholder="Please enter url of your picture." class="form-control"
+                                id="url">
+                        </div>
+                        <button onclick="processForm()" class="btn btn-success">Add URL</button>
+                        <button onclick="reloadImages()" class="btn btn-primary">Refresh</button>
+                        <button @click="doFoo" class="btn btn-dark">Stop</button>
+                        <button @click="doZoo" class="btn btn-primary">Start</button>
+                        <button v-on:click="addItem('Hello')" class="btn btn-primary">Vue Test</button>
+                    </form>
+                </div>
+               <div class="rounded  mt-4 p-3" style="background-color: #0D0B3F;" > 
+                <p class="h6" id="status">Training...</p>
+               </div>
+            </div>
+                <div id="videoContainer" style="background-color:#2A1468">
+                    <div class="d-flex flex-column">
+                        <!-- <div class="p-2">
+                            <p class="h6">Attandance Tracking System</p>
+                        </div> -->
+                        <div class="p-2 rounded" style="background-color: #022135;">
+                            <video id="video" width="720" height="560" autoplay muted></video>
+                        </div>
+                    </div>
+                </div>
+                <button-counter></button-counter>
+                <!-- <div class="p-1" style="background-color: #2A1468">
+                    <p class="h6">Registered</p>
+                    <div v-for="person in persons" class="p-2">
+                        <img class="border rounded-circle" height="60" width="60" v-bind:alt="person.name"
+                            v-bind:src="person.image" />
+                    </div> -->
+                </div> -->
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<!-- <p class="h6" id="status">.</p> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+<script defer src="face-api.min.js"></script>
+<script defer src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="main.js"></script>
+<script src="components.js"></script>
+<script>
+    var foo = () => { TrainModels() };
+    var zoo = () => { startVideo() };
+    const app = new Vue({
+        el: '#app',
+        data: {
+            greetings: 'Please enter your name and picture URL below.',
+            persons: [],
+        },
+        created() {
+            fetch('https://c27924d5-23e1-4196-875f-b0f26a254799.mock.pstmn.io/ats/')
+                .then(response => response.json())
+                .then(json => {
+                    this.persons = json
+                })
+        },
+        methods: {
+            addItem:function(item){
+                console.log(item)
+            },
+            doFoo() {
+                foo()
+            },
+            doZoo() {
+                zoo()
+            }
+        }
+    })
+</script>
