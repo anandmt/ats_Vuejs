@@ -100,8 +100,8 @@
         {
             'identifiedPerson': function (val, oldVal) {
                 console.log('new: %s, old: %s', val, oldVal)
-                if (val != oldVal && val != 'unknown' && val != null && this.identifiedPerson != null) {
-                    console.log('identifiedPerson: '+identifiedPerson);
+                if (val != oldVal && val != 'unknown' && val != null && app.identifiedPerson != null) {
+                    console.log('identifiedPerson: '+app.identifiedPerson);
                     app.persons.forEach(findPerson);
                     function findPerson(item, index) {
                         if (item.name === val) {
@@ -120,7 +120,7 @@
                             return true;
                         }
                     }
-                    swal(identifiedPerson, "You have been successfully " + app.status +"!", "success");
+                    swal(app.identifiedPerson, "You have been successfully " + app.status +"!", "success");
                 }
             }
         },
