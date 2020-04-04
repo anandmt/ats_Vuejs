@@ -25,7 +25,6 @@
                                     class="btn btn-success animated wobble delay-5s">{{start}}</button>
                             </div>
                             <div class="p-2">
-                                <!-- v-if="app.Training==='Training Done!'" -->
                                 <div v-if="isHidden" class="spinner-border text-warning"></div>
                                 <p v-if="isHidden" class="small" id="status">{{Training}}</p>
                             </div>
@@ -48,50 +47,29 @@
                                 class="btn btn-dark">Register</button>
                         </form>
                     </div>
-                    <!-- <div class="rounded  mt-4 p-3" style="background-color: #0D0B3F;">
-                        <p class="h6" id="status">{{Training}}</p>
-                    </div> -->
                 </div>
                 <div id="videoContainer" style="background-color:#2A1468">
-                    <!-- <input v-bind:value="personName" v-on:input="personNameDetected" type="text"> -->
                     <div class="d-flex flex-column">
                         <div class="p-2 rounded" style="background-color: #022135;">
                             <video id="video" width="720" height="560" autoplay muted></video>
                         </div>
-                        <!-- <div>
-                            <input v-model="identifiedPerson" placeholder="edit me">
-                            <br>
-                            <p>{{identifiedPerson}}</p>
-
-                        </div> -->
                     </div>
                 </div>
-                <!-- <button-counter></button-counter> #2A1468-->
                 <div class="p-1" clearfix>
                     <p class="mt-3 h6">Registered</p>
                     <div v-for="person in persons" class="p-2">
-                        <a href="#" data-toggle="tooltip" data-placement="top"
-                            v-bind:title="person.name +' ('+ person.status +')'">
-                            <!-- <div class=" border border-info p-1 rounded-circle"> -->
-                            <span class="badge badge-pill badge-warning positionAbsolute">{{person.status}}</span>
-                            <!-- <img v-if="person.status === 'enter'"
-                                class="border border-success p-1 rounded-circle border-3" height="60" width="60"
-                                v-bind:alt="person.name" v-bind:src="person.image" /> -->
-                            <img class="border border-info p-1 rounded-circle border-3" height="60" width="60"
-                                v-bind:alt="person.name" v-bind:src="person.image" />
-                            <!-- </div> -->
-                        </a>
+                        <span class="badge badge-pill badge-warning positionAbsolute">{{person.status}}</span>
+                        <img class="border border-info p-1 rounded-circle border-3" height="60" width="60"
+                            v-bind:alt="person.name" v-bind:src="person.image" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script defer src="js/handle.js"></script>
+<!-- <script defer src="js/handle.js"></script> -->
+<script defer src="js/sweetalert.js"></script>
 <script defer src="face-api.min.js"></script>
 <script defer src="main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -105,6 +83,7 @@
         data: {
             start: 'Start Engine',
             identifiedPerson: '',
+            status: null,
             errors: [],
             greetings: 'Please enter your name and picture URL below to register.',
             persons: [],
@@ -120,28 +99,81 @@
         {
             'identifiedPerson': function (val, oldVal) {
                 console.log('new: %s, old: %s', val, oldVal)
-                // app.Sleep(5000); // to simulate the person identified.
-                //debugger;
                 if (val != oldVal && val != 'unknown' && val != null && this.identifiedPerson != null) {
+                    // app.persons.forEach(findPerson);
+
+                    // function findPerson(item, index) {
+                    //     //debugger;
+                    //     if (item.name === val) {
+                    //         if (item.status === 'enter') {
+                    //             console.log('Marking exit');
+                    //             item.status = 'exit';
+                    //             app.status = 'exit';
+                    //         }
+                    //         else {
+                    //             console.log('Marking entry');
+                    //             item.status = 'enter';
+                    //             app.status ='enter';
+                    //         }
+                    //         app.start = 'Start Camera';
+                    //         Stop(); //Stopping Camera
+                    //         return true;
+                    //     }
+                    // }
+
+
+
                     app.persons.find(val => {
                         if (val.status === 'enter') {
                             console.log('Marking exit');
                             val.status = 'exit';
+                            app.status = 'exit';
                         } else {
                             console.log('Marking entry');
-                            val.status = 'entry';
+                            val.status = 'enter';
+                            app.status = 'enter';
                         }
+
+                        app.start = 'Start Camera';
+                          Stop(); //Stopping Camera
                         return true;
                     });
-                    Swal.fire(
-                        {
-                            icon: 'success',
-                            title: 'Great!!',
-                            text: "I won't be able to register you without your name and picture URL!!!",
-                            footer: "<a href>This is needed to Train the Tensorflow Model</a>"
-                        });
-                    Stop(); //Stopping Camera
-                    this.start = 'Start Camera';
+
+                    // Swal.fire(
+                    //     {
+                    //         position: 'top-end',
+                    //         icon: 'success',
+                    //         title: 'You have successfull '+this.status +'!'
+                    //     });
+                    // swal({
+                    //     title: "Ajax request example",
+                    //     text: 'You have successfull ' + this.status + '!',
+                    //     type: "info",
+                    //     showCancelButton: false,
+                    //     closeOnConfirm: false,
+                    //     showLoaderOnConfirm: true
+                    // }, function () {
+                    //     Stop();
+                    //     this.start = 'Start Camera';
+                    //     return false;
+                    // });
+                    swal("Good job!", "You are " + app.status, "success")
+                    // swal({
+                    //     title: "You are " + this.status,
+                    //     text: "Your will not be able to recover this imaginary file!",
+                    //     type: "warning",
+                    //     showCancelButton: true,
+                    //     closeOnConfirm: false
+                    // },
+                    //     function () {
+                    //          swal(this.status, "Stoping the streaming for next visit, please click on Start Camera.", "success");
+                    //          Stop();
+                    //         this.start = 'Start Camera';
+                    //         return true;
+                    //     });
+                    // this.start = 'Start Camera';
+                    // Stop(); //Stopping Camera
+
                 }
             }
         },
@@ -167,7 +199,7 @@
             RegisterNewMember: function (status, entryTime, exitTime) {
                 // debugger;
                 if (!this.name || !this.URL) {
-                    Swal.fire({
+                    swal({
                         icon: 'error',
                         title: 'Oops...',
                         text: "I won't be able to register you without your name and picture URL!!!",
@@ -199,14 +231,8 @@
                     .catch(e => {
                         console.log(e);
                     })
-            },
-            Sleep(milliseconds) {
-                const date = Date.now();
-                let currentDate = null;
-                do {
-                    currentDate = Date.now();
-                } while (currentDate - date < milliseconds);
             }
+
         }
     })
 </script>
