@@ -7,99 +7,205 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet" href="/style/main.css">
+    <link rel="stylesheet" href="/style/sweetalert.css">
 </head>
 
-<body style="background-color:#2A1468;">
+<body>
     <div id="app">
         <div class="container-fluid">
             <div class="d-flex text-white">
                 <div class="d-flex flex-column">
-                    <div class="rounded mt-4 p-4 bg-info">
-                        <p class="h5">Attendance Tracking System</p>
+                    <div class="rounded mt-4 p-3 bg-info">
+                        <p class="h4 animated bounceInDown">Attendance Tracking System</p>
+                        <div class="d-flex">
+                            <div class="p-2">
+                                <button v-on:click="MarkAttendance(), isHidden = !isHidden"
+                                    class="btn btn-success animated wobble delay-5s">{{start}}</button>
+                            </div>
+                            <div class="p-2">
+                                <!-- v-if="app.Training==='Training Done!'" -->
+                                <div v-if="isHidden" class="spinner-border text-warning"></div>
+                                <p v-if="isHidden" class="small" id="status">{{Training}}</p>
+                            </div>
+                        </div>
                     </div>
-                <div class="rounded bg-info mt-4 p-4">
-                   
-                    <p class="h5">{{greetings}}</p>
-                    <form class="mt-5" id="inputForm" onsubmit="return false">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" placeholder="Please enter you name." class="form-control" id="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="url">URL</label>
-                            <input type="text" placeholder="Please enter url of your picture." class="form-control"
-                                id="url">
-                        </div>
-                        <button onclick="processForm()" class="btn btn-success">Add URL</button>
-                        <button onclick="reloadImages()" class="btn btn-primary">Refresh</button>
-                        <button @click="doFoo" class="btn btn-dark">Stop</button>
-                        <button @click="doZoo" class="btn btn-primary">Start</button>
-                        <button v-on:click="addItem('Hello')" class="btn btn-primary">Vue Test</button>
-                    </form>
+                    <div class="rounded bg-info mt-4 p-4">
+                        <p class="h5">{{greetings}}</p>
+                        <form class="mt-5" onsubmit="return false">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" required placeholder="Please enter you name." class="form-control"
+                                    id="name" v-model="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" required placeholder="Please enter url of your picture."
+                                    class="form-control" id="url" v-model="URL">
+                            </div>
+                            <button v-on:click="RegisterNewMember('enter',new Date(),'')"
+                                class="btn btn-dark">Register</button>
+                        </form>
+                    </div>
+                    <!-- <div class="rounded  mt-4 p-3" style="background-color: #0D0B3F;">
+                        <p class="h6" id="status">{{Training}}</p>
+                    </div> -->
                 </div>
-               <div class="rounded  mt-4 p-3" style="background-color: #0D0B3F;" > 
-                <p class="h6" id="status">Training...</p>
-               </div>
-            </div>
                 <div id="videoContainer" style="background-color:#2A1468">
+                    <!-- <input v-bind:value="personName" v-on:input="personNameDetected" type="text"> -->
                     <div class="d-flex flex-column">
-                        <!-- <div class="p-2">
-                            <p class="h6">Attandance Tracking System</p>
-                        </div> -->
                         <div class="p-2 rounded" style="background-color: #022135;">
                             <video id="video" width="720" height="560" autoplay muted></video>
                         </div>
+                        <!-- <div>
+                            <input v-model="identifiedPerson" placeholder="edit me">
+                            <br>
+                            <p>{{identifiedPerson}}</p>
+
+                        </div> -->
                     </div>
                 </div>
-                <button-counter></button-counter>
-                <!-- <div class="p-1" style="background-color: #2A1468">
-                    <p class="h6">Registered</p>
+                <!-- <button-counter></button-counter> #2A1468-->
+                <div class="p-1" clearfix>
+                    <p class="mt-3 h6">Registered</p>
                     <div v-for="person in persons" class="p-2">
-                        <img class="border rounded-circle" height="60" width="60" v-bind:alt="person.name"
-                            v-bind:src="person.image" />
-                    </div> -->
-                </div> -->
+                        <a href="#" data-toggle="tooltip" data-placement="top"
+                            v-bind:title="person.name +' ('+ person.status +')'">
+                            <!-- <div class=" border border-info p-1 rounded-circle"> -->
+                            <span class="badge badge-pill badge-warning positionAbsolute">{{person.status}}</span>
+                            <!-- <img v-if="person.status === 'enter'"
+                                class="border border-success p-1 rounded-circle border-3" height="60" width="60"
+                                v-bind:alt="person.name" v-bind:src="person.image" /> -->
+                            <img class="border border-info p-1 rounded-circle border-3" height="60" width="60"
+                                v-bind:alt="person.name" v-bind:src="person.image" />
+                            <!-- </div> -->
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </body>
-
-
-<!-- <p class="h6" id="status">.</p> -->
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> -->
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script defer src="js/handle.js"></script>
 <script defer src="face-api.min.js"></script>
-<script defer src="script.js"></script>
+<script defer src="main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="main.js"></script>
 <script src="components.js"></script>
 <script>
-    var foo = () => { TrainModels() };
-    var zoo = () => { startVideo() };
+    var trainModels = () => { TrainModels() };
+    var Stop = () => { stopCamera() };
+    var Start = () => { startVideo(); };
     const app = new Vue({
         el: '#app',
         data: {
-            greetings: 'Please enter your name and picture URL below.',
+            start: 'Start Engine',
+            identifiedPerson: '',
+            errors: [],
+            greetings: 'Please enter your name and picture URL below to register.',
             persons: [],
+            newPerson: [],
+            name: null,
+            URL: null,
+            entry: '',
+            exit: '',
+            Training: 'Training...',
+            isHidden: false,
+        },
+        watch:
+        {
+            'identifiedPerson': function (val, oldVal) {
+                console.log('new: %s, old: %s', val, oldVal)
+                // app.Sleep(5000); // to simulate the person identified.
+                //debugger;
+                if (val != oldVal && val != 'unknown' && val != null && this.identifiedPerson != null) {
+                    app.persons.find(val => {
+                        if (val.status === 'enter') {
+                            console.log('Marking exit');
+                            val.status = 'exit';
+                        } else {
+                            console.log('Marking entry');
+                            val.status = 'entry';
+                        }
+                        return true;
+                    });
+                    Swal.fire(
+                        {
+                            icon: 'success',
+                            title: 'Great!!',
+                            text: "I won't be able to register you without your name and picture URL!!!",
+                            footer: "<a href>This is needed to Train the Tensorflow Model</a>"
+                        });
+                    Stop(); //Stopping Camera
+                    this.start = 'Start Camera';
+                }
+            }
         },
         created() {
-            fetch('https://c27924d5-23e1-4196-875f-b0f26a254799.mock.pstmn.io/ats/')
+            fetch('https://my-json-server.typicode.com/anandmt/jsondb/users')
                 .then(response => response.json())
                 .then(json => {
                     this.persons = json
                 })
         },
         methods: {
-            addItem:function(item){
-                console.log(item)
+            MarkAttendance: function () {
+                // debugger;
+                if (this.start === 'Start Engine') {
+                    trainModels()
+                }
+                else {
+                    Start()
+                    this.start = 'Stop Camera';
+                    this.identifiedPerson = null;
+                }
             },
-            doFoo() {
-                foo()
+            RegisterNewMember: function (status, entryTime, exitTime) {
+                // debugger;
+                if (!this.name || !this.URL) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: "I won't be able to register you without your name and picture URL!!!",
+                        footer: "<a href>This is needed to Train the Tensorflow Model</a>"
+                    })
+                    return false;
+                }
+                this.persons.push({
+                    name: this.name,
+                    image: this.URL,
+                    entry: entryTime,
+                    exit: exitTime,
+                    status: status
+                })
+                this.name = '',
+                    this.URL = '',
+                    trainModels(),
+                    console.log(this.persons)
             },
-            doZoo() {
-                zoo()
+            SavePerson() { // not using to avoid data privacy while demo
+                // debugger;
+                axios.post(`http://jsonplaceholder.typicode.com/posts`, {
+                    body: this.newPerson
+                })
+                    .then(response => {
+                        this.persons.push(response.data.body[0]);
+                        console.log(this.persons);
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    })
+            },
+            Sleep(milliseconds) {
+                const date = Date.now();
+                let currentDate = null;
+                do {
+                    currentDate = Date.now();
+                } while (currentDate - date < milliseconds);
             }
         }
     })

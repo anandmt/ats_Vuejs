@@ -1,5 +1,6 @@
 const video = document.getElementById("video");
-
+const labeled = {};
+//var identifiedPerson='';
 // const labeled = {
 //     Anand: [
 //       "https://res.cloudinary.com/dq3npvyjj/image/upload/v1585571840/anand_lnkdn_yzmu5g.jpg"
@@ -11,8 +12,7 @@ const video = document.getElementById("video");
 //   };
 
 function stopCamera() {
-  alert("foo ME");
-  // stopMediaTracks(video.srcObject);
+  stopMediaTracks(video.srcObject);
 }
 
 function stopMediaTracks(stream) {
@@ -20,9 +20,6 @@ function stopMediaTracks(stream) {
     track.stop();
   });
 }
-
-//console.log(labeled);
-const labeled = {};
 
 function processForm() {
   var name = document.getElementById("name").value;
@@ -44,10 +41,8 @@ function processForm() {
 
 function TrainModels() {
   console.log('TrainModels started');
-debugger;
   var i;
   for (i = 0; i < app.persons.length; i++) {
-    console.log(i);
     if (name in labeled) {
       labeled[app.persons[i].name].push(app.persons[i].image);
    } 
@@ -55,7 +50,8 @@ debugger;
       labeled[app.persons[i].name] = [app.persons[i].image];
     }
   }
- console.log(labeled);
+  start();
+ //console.log(labeled);
 }
 
 function reloadImages() {
@@ -114,6 +110,7 @@ async function start() {
         label: result.toString()
       });
       drawBox.draw(canvas);
+      identifiedPerson=result._label;
     });
     // faceapi.draw.drawDetections(canvas, resizedDetections)
     //faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
@@ -121,12 +118,17 @@ async function start() {
   }, 100);
 }
 
+function UpdateAttendance(result){
+  console.log(result);
+  stopCamera();
+}
+
 function loadLabeledImages() {
   return Promise.all(
     Object.keys(labeled).map(async label => {
       const descriptions = [];
       for (let i = 0; i < labeled[label].length; i++) {
-        console.log(labeled[label][i]);
+        //console.log('Anand::'+labeled[label][i]);
         const img = await faceapi.fetchImage(labeled[label][i]);
         const detections = await faceapi
           .detectSingleFace(img)
