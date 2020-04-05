@@ -1,4 +1,4 @@
-Vue.component('button-counter', {
+Vue.component('reg-persons', {
     data: function () {
       return {
           persons: [],

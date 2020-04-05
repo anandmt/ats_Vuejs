@@ -78,13 +78,13 @@ video.addEventListener("play", () => {
 });
 
 async function start() {
-  app.isHidden= true;
+  markAttendance.__vue__.isHidden= true;
   // document.getElementById("status").innerHTML = "Loading...";
-   app.Training="Training....";
+  markAttendance.__vue__.Training="Training....";
   const canvas = faceapi.createCanvasFromMedia(video);
   const labeledFaceDescriptors = await loadLabeledImages();
  // console.log("loaded");
-  app.Training="Training Done!"
+ markAttendance.__vue__.Training="Training Done!"
   //document.getElementById("status").innerHTML = "Ready";
 
   const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.8);
@@ -92,8 +92,8 @@ async function start() {
   document.getElementById("videoContainer").append(canvas);
   const displaySize = { width: video.width, height: video.height };
   faceapi.matchDimensions(canvas, displaySize);
-  app.isHidden=false;
-  app.start="Mark Attendance";
+  markAttendance.__vue__.isHidden=false;
+  markAttendance.__vue__.start="Mark Attendance";
   setInterval(async () => {
     const detections = await faceapi
       .detectAllFaces(video)
@@ -115,18 +115,9 @@ async function start() {
       app.identifiedPerson=result._label;
     });
     // faceapi.draw.drawDetections(canvas, resizedDetections)
-    //faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
+    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
     faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
   }, 100);
-}
-
-function personNameDetected(){
-console.log(identifiedPerson);
-}
-
-function UpdateAttendance(result){
-  console.log(result);
-  stopCamera();
 }
 
 function loadLabeledImages() {
