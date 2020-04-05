@@ -24,10 +24,9 @@ Vue.component("registration", {
         exit: exitTime,
         status: status,
       });
-      (this.name = ""),
-        (this.URL = ""),
-        trainModels(),
-        console.log(this.persons);
+      (this.name = "");
+        (this.URL = "");
+        trainModels();
     }
   },
   template: `
@@ -36,7 +35,8 @@ Vue.component("registration", {
                         <form class="mt-5" onsubmit="return false">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" required placeholder="Please enter you name." class="form-control"
+                                <input type="text" required placeholder="Please enter you name." 
+                                class="form-control"
                                     id="name" v-model="name">
                             </div>
                             <div class="form-group">

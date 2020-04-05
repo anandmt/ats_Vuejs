@@ -1,22 +1,21 @@
 Vue.component('reg-persons', {
-    data: function () {
-      return {
-          persons: [],
-      }
+    created() {
+        fetch('https://my-json-server.typicode.com/anandmt/jsondb/users')
+            .then(response => response.json())
+            .then(json => {
+                app.persons = json
+            })
     },
-          created() {
-              fetch('https://c27924d5-23e1-4196-875f-b0f26a254799.mock.pstmn.io/ats/')
-                  .then(response => response.json())
-                  .then(json => {
-                      this.persons = json
-                  })
-          },
     template: `
-    <div class="p-1" style="background-color: #2A1468">
-    <p class="h6">Registered</p>
-                      <div v-for="person in this.persons" class="p-2">
-                          <img class="border rounded-circle" height="60" width="60" v-bind:alt="person.name"
-                              v-bind:src="person.image" />
-                      </div></div>
+    <div class="p-1" clearfix>
+    <p class="mt-3 h6">Registered</p>
+    <div v-for="person in persons" class="p-2">
+        <span class="badge badge-pill badge-warning positionAbsolute">{{person.status}}</span>
+        <img v-if="person.status==='enter'" class="border border-success p-1 rounded-circle border-3"
+            height="60" width="60" v-bind:alt="person.name" v-bind:src="person.image" />
+        <img v-else class="border border-danger p-1 rounded-circle border-3" height="60" width="60"
+            v-bind:alt="person.name" v-bind:src="person.image" />
+    </div>
+</div>
     `
   })

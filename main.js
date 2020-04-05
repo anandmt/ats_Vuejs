@@ -18,26 +18,7 @@ function stopMediaTracks(stream) {
   });
 }
 
-function processForm() {
-  var name = document.getElementById("name").value;
-  var url = document.getElementById("url").value;
-
-  if (name in labeled) {
-    labeled[name].push(url);
-  } else {
-    labeled[name] = [url];
-  }
-
-  document.getElementById("name").value = "";
-  document.getElementById("url").value = "";
-  document.getElementById("status").innerHTML =
-    'Images ready to be processed. Click "Refresh"';
-
-  console.log(labeled);
-}
-
 function TrainModels() {
-  app.Training="Training....";
   console.log('TrainModels started');
   var i;
   for (i = 0; i < app.persons.length; i++) {
@@ -49,6 +30,8 @@ function TrainModels() {
     }
   }
   start();
+
+  console.log(labeled);
 }
 
 function reloadImages() {
@@ -79,7 +62,6 @@ video.addEventListener("play", () => {
 
 async function start() {
   markAttendance.__vue__.isHidden= true;
-  // document.getElementById("status").innerHTML = "Loading...";
   markAttendance.__vue__.Training="Training....";
   const canvas = faceapi.createCanvasFromMedia(video);
   const labeledFaceDescriptors = await loadLabeledImages();

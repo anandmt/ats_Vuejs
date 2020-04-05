@@ -18,13 +18,7 @@
                     <mark-attendance id="markAttendance"></mark-attendance>
                     <registration></registration>
                 </div>
-                <div id="videoContainer">
-                    <div class="d-flex flex-column m-3">
-                        <div class="p-2 rounded" style="background-color: #022135;">
-                            <video id="video" width="720" height="560" autoplay muted></video>
-                        </div>
-                    </div>
-                </div>
+                <video-container></video-container>
                 <div class="p-1" clearfix>
                     <p class="mt-3 h6">Registered</p>
                     <div v-for="person in persons" class="p-2">
@@ -46,10 +40,10 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="components/newRegister.js"></script>
 <script src="components/markAttendance.js"></script>
+<script src="components/videoComponent.js"></script>
+<script src="components/registeredPersons.js"></script>
 <script>
     var trainModels = () => { TrainModels() };
-    var Stop = () => { stopCamera() };
-    var Start = () => { startVideo(); };
     const app = new Vue({
         el: '#app',
         data: {
