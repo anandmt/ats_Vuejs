@@ -1,14 +1,12 @@
 const video = document.getElementById("video");
-const labeled = {};
-// const labeled = {
-//     Anand: [
-//       "https://res.cloudinary.com/dq3npvyjj/image/upload/v1585571840/anand_lnkdn_yzmu5g.jpg"
-//     ], Rikhil: [
-//       "https://res.cloudinary.com/dq3npvyjj/image/upload/v1585813139/Rikhil_jfr93h.jpg"
-//     ], Arti: [
-//       "https://res.cloudinary.com/dq3npvyjj/image/upload/v1585813139/Arti_uwhsev.jpg"
-//     ]
-//   };
+//const labeled = {};
+const labeled = {
+    'Anand Tiwari': [
+      "https://res.cloudinary.com/dq3npvyjj/image/upload/v1585571840/anand_lnkdn_yzmu5g.jpg"
+    ], 'Rikhil Tiwari': [
+      "https://res.cloudinary.com/dq3npvyjj/image/upload/v1585813139/Rikhil_jfr93h.jpg"
+    ],
+  };
 
 function stopCamera() {
   stopMediaTracks(video.srcObject);
@@ -80,8 +78,9 @@ video.addEventListener("play", () => {
 });
 
 async function start() {
+  app.isHidden= true;
   // document.getElementById("status").innerHTML = "Loading...";
-  // app.Training="Training....";
+   app.Training="Training....";
   const canvas = faceapi.createCanvasFromMedia(video);
   const labeledFaceDescriptors = await loadLabeledImages();
  // console.log("loaded");
@@ -89,10 +88,12 @@ async function start() {
   //document.getElementById("status").innerHTML = "Ready";
 
   const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.8);
-  app.isHidden=false;
+  
   document.getElementById("videoContainer").append(canvas);
   const displaySize = { width: video.width, height: video.height };
   faceapi.matchDimensions(canvas, displaySize);
+  app.isHidden=false;
+  app.start="Mark Attendance";
   setInterval(async () => {
     const detections = await faceapi
       .detectAllFaces(video)

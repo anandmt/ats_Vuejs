@@ -21,7 +21,7 @@
                         <p class="h4 animated bounceInDown">Attendance Tracking System</p>
                         <div class="d-flex">
                             <div class="p-2">
-                                <button v-on:click="MarkAttendance(), isHidden = !isHidden"
+                                <button v-if="!isHidden" v-on:click="MarkAttendance()"
                                     class="btn btn-success animated wobble delay-5s">{{start}}</button>
                             </div>
                             <div class="p-2">
@@ -59,9 +59,9 @@
                     <p class="mt-3 h6">Registered</p>
                     <div v-for="person in persons" class="p-2">
                         <span class="badge badge-pill badge-warning positionAbsolute">{{person.status}}</span>
-                        <img v-if="person.status==='enter'" class="border border-success p-1 rounded-circle border-3" height="60" width="60"
-                            v-bind:alt="person.name" v-bind:src="person.image" />
-                            <img v-else class="border border-danger p-1 rounded-circle border-3" height="60" width="60"
+                        <img v-if="person.status==='enter'" class="border border-success p-1 rounded-circle border-3"
+                            height="60" width="60" v-bind:alt="person.name" v-bind:src="person.image" />
+                        <img v-else class="border border-danger p-1 rounded-circle border-3" height="60" width="60"
                             v-bind:alt="person.name" v-bind:src="person.image" />
                     </div>
                 </div>
@@ -69,7 +69,7 @@
         </div>
     </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script defer src="js/sweetalert.js"></script>
 <script defer src="face-api.min.js"></script>
 <script defer src="main.js"></script>
@@ -82,48 +82,48 @@
     const app = new Vue({
         el: '#app',
         data: {
-            start: 'Start Engine',
+            start: 'Loading...',
             identifiedPerson: '',
-            status: null,
+            status: '',
             errors: [],
             greetings: 'Please enter your name and picture URL below to register.',
             persons: [],
             newPerson: [],
-            name: null,
-            URL: null,
+            name: '',
+            URL: '',
             entry: '',
             exit: '',
             Training: 'Training...',
             isHidden: false,
         },
-        watch:
-        {
-            'identifiedPerson': function (val, oldVal) {
-                console.log('new: %s, old: %s', val, oldVal)
-                if (val != oldVal && val != 'unknown' && val != null && app.identifiedPerson != null) {
-                    console.log('identifiedPerson: '+app.identifiedPerson);
-                    app.persons.forEach(findPerson);
-                    function findPerson(item, index) {
-                        if (item.name === val) {
-                            if (item.status === 'enter') {
-                                console.log('Marking exit');
-                                item.status = 'exit';
-                                app.status = 'exit';
-                            }
-                            else {
-                                console.log('Marking entry');
-                                item.status = 'enter';
-                                app.status ='enter';
-                            }
-                            app.start = 'Start Camera';
-                            Stop(); //Stopping Camera
-                            return true;
-                        }
-                    }
-                    swal(app.identifiedPerson, "You have been successfully " + app.status +"!", "success");
-                }
-            }
-        },
+        // watch:
+        // {
+        //     'identifiedPerson': function (val, oldVal) {
+        //         console.log('new: %s, old: %s', val, oldVal)
+        //         if (val != oldVal && val != 'unknown' && val != null && app.identifiedPerson != null) {
+        //             console.log('identifiedPerson: '+app.identifiedPerson);
+        //             app.persons.forEach(findPerson);
+        //             function findPerson(item, index) {
+        //                 if (item.name === val) {
+        //                     if (item.status === 'enter') {
+        //                         console.log('Marking exit');
+        //                         item.status = 'exit';
+        //                         app.status = 'exit';
+        //                     }
+        //                     else {
+        //                         console.log('Marking entry');
+        //                         item.status = 'enter';
+        //                         app.status ='enter';
+        //                     }
+        //                     app.start = 'Start Camera';
+        //                     Stop(); //Stopping Camera
+        //                     return true;
+        //                 }
+        //             }
+        //             swal(app.identifiedPerson, "You have been successfully " + app.status +"!", "success");
+        //         }
+        //     }
+        // },
         created() {
             fetch('https://my-json-server.typicode.com/anandmt/jsondb/users')
                 .then(response => response.json())
@@ -133,14 +133,30 @@
         },
         methods: {
             MarkAttendance: function () {
-                if (this.start === 'Start Engine') {
-                    trainModels()
+                var BreakLoop = {};
+                try {
+                    app.persons.forEach(function (item) {
+                        console.log(item);
+                        debugger;
+                        if (item.name === app.identifiedPerson) {
+                            
+                            if (item.status === 'enter') {
+                                console.log('Marking exit');
+                                item.status = 'exit';
+                                app.status = 'exit';
+                            }
+                            else {
+                                console.log('Marking entry');
+                                item.status = 'enter';
+                                app.status = 'enter';
+                            }
+                            throw BreakLoop; // Breaking foreach.
+                        }
+                    });
+                } catch (e) {
+                    if (e !== BreakLoop) throw e;
                 }
-                else {
-                    Start()
-                    this.start = 'Stop Camera';
-                    this.identifiedPerson = null;
-                }
+                swal(app.identifiedPerson, "You have been successfully " + app.status + "!", "success");
             },
             RegisterNewMember: function (status, entryTime, exitTime) {
                 if (!this.name || !this.URL) {
