@@ -8,8 +8,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <link rel="stylesheet" href="/style/main.css">
-    <link rel="stylesheet" href="/style/sweetalert.css">
+    <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="style/sweetalert.css">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
         <div class="container-fluid">
             <div class="d-flex text-white">
                 <div class="d-flex flex-column">
-                    <div class="rounded mt-4 p-3 bg-info">
+                    <div class="rounded mt-3 p-3 bg-info">
                         <p class="h4 animated bounceInDown">Attendance Tracking System</p>
                         <div class="d-flex">
                             <div class="p-2">
@@ -48,8 +48,8 @@
                         </form>
                     </div>
                 </div>
-                <div id="videoContainer" style="background-color:#2A1468">
-                    <div class="d-flex flex-column">
+                <div id="videoContainer">
+                    <div class="d-flex flex-column m-3">
                         <div class="p-2 rounded" style="background-color: #022135;">
                             <video id="video" width="720" height="560" autoplay muted></video>
                         </div>
@@ -96,34 +96,6 @@
             Training: 'Training...',
             isHidden: false,
         },
-        // watch:
-        // {
-        //     'identifiedPerson': function (val, oldVal) {
-        //         console.log('new: %s, old: %s', val, oldVal)
-        //         if (val != oldVal && val != 'unknown' && val != null && app.identifiedPerson != null) {
-        //             console.log('identifiedPerson: '+app.identifiedPerson);
-        //             app.persons.forEach(findPerson);
-        //             function findPerson(item, index) {
-        //                 if (item.name === val) {
-        //                     if (item.status === 'enter') {
-        //                         console.log('Marking exit');
-        //                         item.status = 'exit';
-        //                         app.status = 'exit';
-        //                     }
-        //                     else {
-        //                         console.log('Marking entry');
-        //                         item.status = 'enter';
-        //                         app.status ='enter';
-        //                     }
-        //                     app.start = 'Start Camera';
-        //                     Stop(); //Stopping Camera
-        //                     return true;
-        //                 }
-        //             }
-        //             swal(app.identifiedPerson, "You have been successfully " + app.status +"!", "success");
-        //         }
-        //     }
-        // },
         created() {
             fetch('https://my-json-server.typicode.com/anandmt/jsondb/users')
                 .then(response => response.json())
