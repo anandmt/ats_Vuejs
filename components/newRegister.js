@@ -10,10 +10,11 @@ Vue.component("registration", {
     RegisterNewMember: function (status, entryTime, exitTime) {
       if (!this.name || !this.URL) {
         swal({
-          icon: "error",
           title: "Oops...",
-          text:"I won't be able to register you without your name and picture URL!!!",
-          footer: "<a href>This is needed to Train the Tensorflow Model</a>",
+          text:
+            "I won't be able to register you without your name and picture URL!",
+          icon: "error",
+          button: "OK",
         });
         return false;
       }
@@ -24,10 +25,10 @@ Vue.component("registration", {
         exit: exitTime,
         status: status,
       });
-      (this.name = "");
-        (this.URL = "");
-        trainModels();
-    }
+      this.name = "";
+      this.URL = "";
+      trainModels();
+    },
   },
   template: `
     <div class="rounded bg-info mt-4 p-4">

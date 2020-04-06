@@ -1,37 +1,41 @@
 Vue.component("mark-attendance", {
-    data: function () {
-      return {
-        isHidden: false,
-        Training: 'Training...',
-        start: 'Loading...',
-      };
-    },
-    methods: {
-        MarkAttendance: function () {
-            var BreakLoop = {};
-            try {
-                app.persons.forEach(function (item) {
-                    if (item.name === app.identifiedPerson) {
-                        if (item.status === 'enter') {
-                            console.log('Marking exit');
-                            item.status = 'exit';
-                            app.status = 'exit';
-                        }
-                        else {
-                            console.log('Marking entry');
-                            item.status = 'enter';
-                            app.status = 'enter';
-                        }
-                        throw BreakLoop; // Breaking foreach.
-                    }
-                });
-            } catch (e) {
-                if (e !== BreakLoop) throw e;
+  data: function () {
+    return {
+      isHidden: false,
+      Training: "Training...",
+      start: "Loading...",
+    };
+  },
+  methods: {
+    MarkAttendance: function () {
+      var BreakLoop = {};
+      try {
+        app.persons.forEach(function (item) {
+          if (item.name === app.identifiedPerson) {
+            if (item.status === "enter") {
+              console.log("Marking exit");
+              item.status = "exit";
+              app.status = "exit";
+            } else {
+              console.log("Marking entry");
+              item.status = "enter";
+              app.status = "enter";
             }
-            swal(app.identifiedPerson, "You have been successfully " + app.status + "!", "success");
-        }
+            throw BreakLoop; // Breaking foreach.
+          }
+        });
+      } catch (e) {
+        if (e !== BreakLoop) throw e;
+      }
+      swal({
+        title: app.identifiedPerson,
+        text: "You have been successfully " + app.status + "!",
+        icon: "success",
+        button: "OK",
+      });
     },
-    template: `
+  },
+  template: `
     <div class="rounded mt-3 p-3 bg-info">
     <p class="h4 animated bounceInDown">Attendance Tracking System</p>
     <div class="d-flex">
@@ -46,5 +50,4 @@ Vue.component("mark-attendance", {
     </div>
 </div>
       `,
-  });
-  
+});
