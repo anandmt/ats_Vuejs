@@ -4,6 +4,7 @@ Attendance Tracking System
 A VueJs web progressive application for ATS (attendance tracking system).
 
 [![Build Status](https://res.cloudinary.com/dq3npvyjj/image/upload/v1586335386/passing_bnpp6y.svg)](https://github.com/anandmt/ats_desktop)
+![CI](https://github.com/anandmt/ats_Vuejs/workflows/CI/badge.svg)
 
 ATS web is a Vuejs Progressive web application, which work on any machine which is having camera inbuilt including mobile devices, it is powered with TensorflowJs Face identification library trained by  for face tracking and Azure API for accuret Face matching.
 
