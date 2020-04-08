@@ -25,24 +25,33 @@ You can also:
 
 ATS uses a number of open source projects:
 
+* [vuejs](https://vuejs.org/) - The Progressive JavaScript Framework
 * [TensorflowJs- face-api.js](https://itnext.io/face-api-js-javascript-api-for-face-recognition-in-the-browser-with-tensorflow-js-bcc2a6c4cf07) - For face tracking and matching!
 * [bootstrap Design](https://getbootstrap.com/docs/4.0/getting-started/introduction/) - An awesome and the world’s most popular framework for building responsive, mobile-first sites.
 * [Animate.js](https://daneden.github.io/animate.css/) - For animation's, must have library!
+* [SweetAlert.js](https://lipis.github.io/bootstrap-sweetalert/) - SweetAlert for Bootstrap a beautiful replacement for JavaScript's "alert"
+* [axios](https://github.com/axios/axios) - axios a promise based HTTP client for the browser and node.js
+* [github](https://anandmt.github.io/) - Hosting this project on github.
+* [JsonAPI](https://my-json-server.typicode.com/anandmt/jsondb/users) - My JSON Server an instant Json API server for app's
 
-And of course ATS itself is an open source link: [ats_desktop](https://github.com/anandmt/ats_desktop)
- on GitHub.
+And of course ATS itself is an open source link: [ats](https://github.com/anandmt/ats_Vuejs) on GitHub.
 
 ### Installation
 
-- ATS requires Dot net Framework 4.6.1 or above.
+- [Fake Online REST server for teams](https://my-json-server.typicode.com/anandmt/jsondb/users)
+- ATS web requires Dot net Framework 4.6.1 or above.
 - Azure Face API Subscription for accurate face Matching.
 
 ```sh
-Find the setup.exe from release folder and install it on windows pc with Dot net framework 4.6.1 orlater installed.
+<!-- production version, optimized for size and speed -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 ```
 ### Todos
 
- - Need to write Test
+ - Need to write unit Test
 
 License
 ----
